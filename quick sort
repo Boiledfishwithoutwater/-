@@ -1,0 +1,49 @@
+	private static int quickOne(int[] data,int low,int high)
+	{
+		int key = data[low];
+		while(low < high)
+		{
+			while( low < high && data[high] >=key) high--;
+			data[low] = data[high];
+			
+			while( low < high && data[low] < key ) low++;
+			 data[high] = data[low];
+		}
+		data[low]=key;
+		return low;
+	}
+	
+	public static void quickNoDiGui(int[] data)
+	{
+		Stack<Integer> stack=new Stack<Integer>();
+		stack.push(0);
+		stack.push(data.length-1);
+		while(!stack.isEmpty())
+		{
+			int high=stack.pop();
+			int low=stack.pop();
+			int mid=quickOne(data,low,high);
+			if(mid+1<high)  
+			{
+				stack.push(mid+1);
+				stack.push(high);
+			}
+			if(low<mid-1)
+			{
+				stack.push(low);
+				stack.push(mid-1);
+			}
+		}
+	}
+	
+	private static void quick2(int[] data,int low,int high)
+	{
+		int mid=quickOne(data,low,high);
+		if(mid+1<high)  quick2(data,mid+1,high);
+		if(low<mid-1)  quick2(data,low,mid-1);
+	}
+	public static void quickSort(int[] data)
+	{
+		if(data==null) return;
+		quick2(data,0,data.length-1);
+	}
