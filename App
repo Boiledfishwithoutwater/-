@@ -1,0 +1,19 @@
+public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int data[]={4,3,2,6,5,7,1};
+				//CRPaiXu.insert(data);
+				//CRPaiXu.choose(data);
+				//CRPaiXu.maopao(data);
+				//CRPaiXu.Kuaisu(data, 0, data.length-1);
+				//CRPaiXu.mergeSort(data, 0, data.length-1);
+				//CRPaiXu.DuiPX(data,0);
+				//Sort.quickSort(data);
+				//Sort.quickNoDiGui(data);
+				//Sort.mergSort(data, 0, data.length-1);
+				//Sort.stackSort(data);
+				//CRPaiXu.quickFF(data, 0,data.length-1 );
+				CRPaiXu.quickNoDiGui(data);
+				CRPaiXu .print(data);
+
+				
+		}
