@@ -1,0 +1,69 @@
+public static void maoPaoSort(int[] data)
+	{
+		for(int i = 0; i < data.length-1; i++)
+		{
+			for(int j = 0; j <data.length-i-1;j++)
+			{
+				if(data[j]>data[j+1])
+				{
+					int temp = data[j];
+					data[j] = data[j+1];
+					data[j+1] = temp;
+				}
+			}
+		}
+	}
+  
+  public static void xuanZeSort(int[] data)
+	{
+		for(int i = 0; i < data.length-1; i++)
+		{
+			int min = i;
+			for(int j = i; j <data.length;j++)
+			{
+				if(data[j]<data[min])
+				{
+					min = j;
+				}
+			}
+			if(min != i)
+			{
+				int t = data[i];
+				data[i] = data[min];
+				data[min] = t;
+			}
+		}
+	}
+  
+  public static void insert(int[] data)
+	{
+		int j=0;
+		for (int i=1;i<data.length;i++)
+		{
+			int num=data[i];
+			for(j=0;j<i;j++)
+				if(data[j]>num)  break;
+			for(int k=i;k>j;k--)
+				data[k]=data[k-1];
+						data[j]=num;
+		}
+	}
+  
+  	public static void DuiPX(int[] data,int i)
+	{
+		int temp = data[i];
+		for( i=data.length/2;i>=1;i--)
+		{
+
+			if (data[i-1]>data[2*i-1])
+			temp=data[i-1];
+			data[i-1]=data[2*i-1];
+			data[2*i-1]=temp;
+			
+			if ((2*i-1<=data.length)&&(data[i-1]>data[i+1-1]))
+				data[i-1]=temp;
+				data[i-1]=data[2*i+1-1];
+				data[2*i-1]=temp;
+			
+		}
+	}
