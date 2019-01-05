@@ -1,0 +1,196 @@
+package PaixuSF;
+
+public class HashSelfMap<T> {
+	
+	private KeyV<T>[] headmap=null;
+	private int count;
+	private KeyV<T> cur=null;
+	private int index=0;
+	
+	private boolean token=false;
+	
+	public HashSelfMap()
+	{
+		headmap=(KeyV<T>[])new Object[10];
+		this.count=0;
+	}
+	
+	public HashSelfMap(int size)
+	{
+		headmap=new KeyV[size];
+		this.count=0;
+	}
+	
+	
+	public boolean put(int key,T value)
+	{
+		KeyV<T> head=headmap[key%headmap.length];
+		KeyV<T>  node=new KeyV<T>(key,value);
+		if(head==null) headmap[key%headmap.length]=node;
+		else
+		{
+			KeyV<T> p,q;
+			p=q=head;
+			while(p!=null)
+			{
+				if(p.key==key) { p.value=value; break;}
+				q=p;
+				p=p.node;
+			}
+		  if(p==null) q.node=node;
+		}
+		this.count++;
+		
+		return true;
+	}
+	
+	public int size()
+	{
+		return this.count;
+	}
+	
+	public T get(int key)
+	{
+		KeyV<T> head=headmap[key%headmap.length];
+		if(head==null) return null;
+		T value;
+		KeyV<T> p, q;
+		p=q=head;
+		while(p!=null)
+		{
+			if(p.key==key) break;
+			q=p;
+			p=p.node;
+		}
+		if(p==null) return null;
+		value=p.value;
+		if(p==head) headmap[key%headmap.length]=p.node;
+		else
+			q.node=p.node;
+		this.count--;
+		return value;
+		
+	}
+	
+	private boolean findCur(int index)
+	{
+		int i;
+		for( i=index;i<headmap.length;i++)
+		{
+			KeyV<T>  p=headmap[i];
+		    if(p==null) continue;
+			this.cur=p;
+			this.index=i;
+			this.token=true;
+			break;
+			
+		}
+		return i<headmap.length;
+		
+	}
+	
+	public boolean  hasMore()
+	{
+		if(index>=headmap.length) return false;
+		if(!this.token) { findCur(0); return true;}
+		    cur=cur.node;
+		    if(cur!=null) return true;
+		    this.index++;
+		    this.token=false;
+		    return findCur(this.index);
+	}
+	
+	
+	public T hasValue()
+	{
+		if(this.cur==null) return null;
+		return this.cur.value;
+	}
+	
+	
+	public void print(HashSelfMap map)
+	{
+		for(int i=0;i<map.headmap.length;i++)
+		{
+			if(map.headmap[i]==null)return;
+			
+			KeyV p ;
+			p=map.headmap[i];
+			System.out.print(p.getKey());
+			System.out.print(p.getValue());
+			while(p.getNode()!=null)
+			{
+				p=p.getNode();
+				System.out.print(p.getKey());
+				System.out.print(p.getValue());
+			}
+		}
+	}
+	
+	public  static void main(String[] args)
+	{
+		HashSelfMap<Integer> map=new HashSelfMap<Integer>(5);
+		map.put(1, 20);
+		map.put(6, 60);
+		map.put(7, 40);
+		map.put(9, 50);
+		
+		while(map.hasMore())
+		{
+			System.out.println(map.hasValue());
+		}
+		
+	}
+	
+	
+	
+}
+
+ class KeyV<T>{
+	 int key;
+	 T value;
+	 KeyV node;
+	
+	public KeyV(int key,T value)
+	{
+		this.key=key;
+		this.value=value;
+		this.node=null;
+	}
+	
+	
+	public int getKey() {
+		return key;
+	}
+	public void setKey(int key) {
+		this.key = key;
+	}
+	public T getValue() {
+		return value;
+	}
+	public void setValue(T value) {
+		this.value = value;
+	}
+	public KeyV getNode() {
+		return node;
+	}
+	public void setNode(KeyV node) {
+		this.node = node;
+	}
+    public KeyV setLast(KeyV kv,int newkv)
+    {
+    	KeyV p ;
+    	int key =0;
+    	 p= kv;
+    	 
+    	 while(kv.getNode()!=null)
+    	 {
+    		 key++;
+    		 p=kv.getNode();
+    	 }
+    	 p.setKey(key);
+    	 p.setValue(newkv);
+    	 return kv;
+    }
+	
+}
